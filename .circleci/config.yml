@@ -29,7 +29,8 @@ jobs:
           at: ~/
       - run:
           name: "print out from file"
-          command: cat ~/output
+          command: cat ~/output.txt
+      - run: return 1 
 
   print_error:
 
@@ -48,6 +49,4 @@ workflows:
       - print_output_file:
           requires:
             - save_hello_world_output
-      - print_error:
-          requires:
-            - print_output_file
+      - print_error
