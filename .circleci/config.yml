@@ -29,8 +29,16 @@ jobs:
           at: ~/
       - run:
           name: "print out from file"
-          command: cat ~/output.txt
+          command: cat ~/output
 
+print_error:
+
+    docker:
+      - image: cimg/base:stable
+
+    steps:
+      - run: echo "There was a failure"
+    when: on_fail
 
 workflows:
   say-hello-world-workflow:
@@ -39,3 +47,4 @@ workflows:
       - print_output_file:
           requires:
             - save_hello_world_output
+      - print_error
