@@ -31,7 +31,7 @@ jobs:
           name: "print out from file"
           command: cat ~/output
 
-print_error:
+  print_error:
 
     docker:
       - image: cimg/base:stable
