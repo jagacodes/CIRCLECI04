@@ -37,8 +37,9 @@ jobs:
       - image: cimg/base:stable
 
     steps:
-      - run: echo "There was a failure"
-    when: on_fail
+      - run: 
+          command: echo "There was a failure"
+          when: on_fail
 
 workflows:
   say-hello-world-workflow:
