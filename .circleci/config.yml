@@ -1,52 +1,17 @@
 version: 2.1
 
 jobs:
-  save_hello_world_output:
-  
+  my_job:
     docker:
-      - image: cimg/base:stable
- 
+      - image: circleci/node:13.8.0
     steps:
-      - checkout
+      - run: exit 1
       - run:
-          name: "echo hello world into a file"
-          command: echo "Hello, World!" > ~/output.txt
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            -  output.txt
-
-
-  
-  print_output_file:
-
-    docker:
-      - image: cimg/base:stable
-
-    steps:
-      -  checkout
-      - attach_workspace:
-          at: ~/
-      - run:
-          name: "print out from file"
-          command: cat ~/output.txt
-      - run: return 1 
-
-  print_error:
-
-    docker:
-      - image: cimg/base:stable
-
-    steps:
-      - run: 
-          command: echo "There was a failure"
+          name: on error
+          command: echo "Hello Error!"
           when: on_fail
 
 workflows:
-  say-hello-world-workflow:
+  my_workflow:
     jobs:
-      -  save_hello_world_output
-      - print_output_file:
-          requires:
-            - save_hello_world_output
-      - print_error
+      - my_job
