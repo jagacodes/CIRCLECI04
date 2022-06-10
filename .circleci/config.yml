@@ -1,0 +1,41 @@
+version: 2.1
+
+jobs:
+  save_hello_world_output:
+  
+    docker:
+      - image: cimg/base:stable
+ 
+    steps:
+      - checkout
+      - run:
+          name: "echo hello world into a file"
+          command: echo "Hello, World!" > ~/output.txt
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            -  output.txt
+
+
+  
+  print_output_file:
+
+    docker:
+      - image: cimg/base:stable
+
+    steps:
+      -  checkout
+      - attach_workspace:
+          at: ~/
+      - run:
+          name: "print out from file"
+          command: cat ~/output.txt
+
+
+workflows:
+  say-hello-world-workflow:
+    jobs:
+      -  save_hello_world_output
+      - print_output_file:
+          requires:
+            - save_hello_world_output
